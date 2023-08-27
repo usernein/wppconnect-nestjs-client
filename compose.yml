@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  bot:
+    image: node:18-alpine3.16
+    working_dir: /workspace
+    restart: unless-stopped
+    volumes:
+      - .:/workspace
+    command: sh -c "npm install && npm run start:prod"
