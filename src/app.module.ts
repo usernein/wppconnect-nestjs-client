@@ -14,9 +14,13 @@ import { QrCodeController } from './events/qr-code/qr-code.controller';
 import { SessionErrorController } from './events/session-error/session-error.controller';
 import { SessionLoggedController } from './events/session-logged/session-logged.controller';
 import { WhatsappStatusController } from './events/whatsapp-status/whatsapp-status.controller';
+import { DiceHandler } from './handlers/received-message/dice.handler';
+import { IUpdateHandler } from './handlers/contracts/handler.interface';
+import { PingHandler } from './handlers/received-message/ping.handler';
+import { WeatherHandler } from './handlers/received-message/weather.handler';
 
 @Module({
-  imports: [ConfigModule.forRoot({ envFilePath: '.env' })],
+  imports: [ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true })],
   controllers: [
     IncomingCallController,
     OnAckController,
@@ -31,6 +35,17 @@ import { WhatsappStatusController } from './events/whatsapp-status/whatsapp-stat
     SessionLoggedController,
     WhatsappStatusController,
   ],
-  providers: [SocketIoClientProvider, SocketIoClientStrategy],
+  providers: [
+    SocketIoClientProvider,
+    SocketIoClientStrategy,
+    DiceHandler,
+    PingHandler,
+    WeatherHandler,
+    {
+      provide: 'ReceivedMessageHandlers',
+      useFactory: (...handlers: IUpdateHandler[]) => handlers,
+      inject: [DiceHandler, PingHandler, WeatherHandler],
+    },
+  ],
 })
 export class AppModule {}
