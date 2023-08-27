@@ -1,4 +1,4 @@
-import { Controller, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { MessagePattern } from '@nestjs/microservices';
 import { MessagesService } from 'src/utils/wpp-connect-sdk';
 
@@ -6,10 +6,13 @@ import { MessagesService } from 'src/utils/wpp-connect-sdk';
 export class ReceivedMessageController {
   private readonly logger = new Logger(ReceivedMessageController.name);
 
+  constructor(
+    private readonly config: ConfigService,
+  ) {}
+
   @MessagePattern('received-message')
   handle(message: any) {
-    this.logger.verbose({ message });
-    const { response } = message;
+    if (this.config.get('LOG_UPDATES')) this.logger.verbose({ message });
 
     if (message.response.body === '!ping') {
       this.logger.log('!ping command received');
