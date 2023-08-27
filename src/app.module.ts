@@ -22,6 +22,7 @@ import { StickerHandler } from './handlers/received-message/sticker.handler';
 import { HelpHandler } from './handlers/received-message/help.handler';
 import { CommandsHandler } from './handlers/received-message/commands.handler';
 import { InfoHandler } from './handlers/received-message/info.handler';
+import { envValidationSchema } from './utils/validation/env-schema-validation';
 
 const updateHandlers = [
   DiceHandler,
@@ -34,7 +35,13 @@ const updateHandlers = [
 ];
 
 @Module({
-  imports: [ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true })],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
+      validationSchema: envValidationSchema,
+    }),
+  ],
   controllers: [
     IncomingCallController,
     OnAckController,
