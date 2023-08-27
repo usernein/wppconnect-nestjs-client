@@ -18,6 +18,20 @@ import { DiceHandler } from './handlers/received-message/dice.handler';
 import { IUpdateHandler } from './handlers/contracts/handler.interface';
 import { PingHandler } from './handlers/received-message/ping.handler';
 import { WeatherHandler } from './handlers/received-message/weather.handler';
+import { StickerHandler } from './handlers/received-message/sticker.handler';
+import { HelpHandler } from './handlers/received-message/help.handler';
+import { CommandsHandler } from './handlers/received-message/commands.handler';
+import { InfoHandler } from './handlers/received-message/info.handler';
+
+const updateHandlers = [
+  DiceHandler,
+  PingHandler,
+  WeatherHandler,
+  StickerHandler,
+  HelpHandler,
+  CommandsHandler,
+  InfoHandler,
+];
 
 @Module({
   imports: [ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true })],
@@ -38,13 +52,11 @@ import { WeatherHandler } from './handlers/received-message/weather.handler';
   providers: [
     SocketIoClientProvider,
     SocketIoClientStrategy,
-    DiceHandler,
-    PingHandler,
-    WeatherHandler,
+    ...updateHandlers,
     {
       provide: 'ReceivedMessageHandlers',
       useFactory: (...handlers: IUpdateHandler[]) => handlers,
-      inject: [DiceHandler, PingHandler, WeatherHandler],
+      inject: updateHandlers,
     },
   ],
 })
