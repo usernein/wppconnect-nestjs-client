@@ -30,7 +30,7 @@ export class WeatherHandler implements IUpdateHandler {
   constructor(private readonly config: ConfigService) {}
 
   match({ response: { body } }: any) {
-    return body.startsWith('.clima');
+    return body?.startsWith('.clima');
   }
 
   async handle({ response }: any) {
