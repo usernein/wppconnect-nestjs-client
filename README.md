@@ -29,3 +29,14 @@ docker compose up -d
 ## Language Support
 
 Please note that currently, all strings in the chatbot are in Brazilian Portuguese, and there is no language preference handling for users yet.
+
+## Acknowledgements
+
+- [WPPConnect-MultiClient](https://github.com/rodriguesabner/WPPConnect-MultiClient), which showed me that wppconnect-server actually has socket support.
+- [Kien Nguyen Ngoc](https://keyyuki.medium.com/), who wrote [this article](https://keyyuki.medium.com/implement-simple-socket-io-client-to-nestjs-microservice-7640e0dfb5ce) that helped me to implement socket handling in NestJS
+- [openapi-typescript-codegen](https://github.com/ferdikoomen/openapi-typescript-codegen), which made it a lot easier to use the REST API of wppconnect-server
+
+## Related
+
+- [wppconnect-php-client](https://github.com/wppconnect-team/wppconnect-php-client)
+- [wppconnect-laravel-client](https://github.com/wppconnect-team/wppconnect-laravel-client)
