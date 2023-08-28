@@ -1,6 +1,6 @@
 # wppconnect-nestjs-client
 
-This is a WhatsApp chatbot project developed in Typescript using NestJS, which consumes the wppconnect-server API. This README provides essential information for setting up the project.
+This is a WhatsApp chatbot project developed in Typescript using [NestJS](https://nestjs.com/), which consumes the [wppconnect-server](https://github.com/wppconnect-team/wppconnect-server) API. This README provides essential information for setting up the project.
 
 ## Configuration
 
