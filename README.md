@@ -4,8 +4,9 @@ This is a WhatsApp chatbot project developed in Typescript using [NestJS](https:
 
 ## Screenshots
 
-<img src="https://github.com/usernein/wppconnect-nestjs-client/assets/29507335/226331fb-a366-4781-a2bd-ad13c800cc6d" width="600" />
-<img src="https://github.com/usernein/wppconnect-nestjs-client/assets/29507335/81d6c52f-b8e6-4be6-9571-4fd4a66e43ec" width="600" />
+Commands ping and commands            |  Commands help and sticker
+:-------------------------:|:-------------------------:
+<img src="https://github.com/usernein/wppconnect-nestjs-client/assets/29507335/226331fb-a366-4781-a2bd-ad13c800cc6d" width="600" /> | <img src="https://github.com/usernein/wppconnect-nestjs-client/assets/29507335/81d6c52f-b8e6-4be6-9571-4fd4a66e43ec" width="600" />
 
 ## Configuration
 
