@@ -17,7 +17,7 @@ Before running the project, follow these steps:
 To run the project, you can use Docker Compose with the background mode:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Language Support
