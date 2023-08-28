@@ -18,3 +18,7 @@ To run the project, you can use Docker Compose with the background mode:
 
 ```bash
 docker-compose up -d
+
+## Language Support
+
+Please note that currently, all strings in the chatbot are in Brazilian Portuguese, and there is no language preference handling for users yet.
