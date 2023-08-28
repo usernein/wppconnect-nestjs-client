@@ -48,9 +48,15 @@ export type I18nTranslations = {
         "result-text": string;
     };
     "help": {
+        "error": {
+            "unexistent-command": string;
+        };
         "header": string;
+        "header-with-command": string;
         "body": string;
         "footer": string;
+        "command-description": string;
+        "command-usage": string;
     };
     "info": {
         "header": string;

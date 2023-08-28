@@ -1,5 +1,11 @@
 {
+  "error": {
+    "unexistent-command": "🤖 *Comando não encontrado: _{command}_*"
+  },
   "header": "🤖 *Precisa de ajuda?*",
+  "header-with-command": "🤖 *Comando _{command}_*",
   "body": "- _Para saber mais sobre o bot, digite *.info*_",
-  "footer": "- _Para ver a lista de comandos disponíveis, digite *.commands*_"
+  "footer": "- _Para ver a lista de comandos disponíveis, digite *.commands*_",
+  "command-description": "- _{description}_",
+  "command-usage": "\n_Modo de uso: {usage}_"
 }
