@@ -4,6 +4,7 @@ import { IUpdateHandler } from '../contracts/handler.interface';
 import { I18nService } from 'nestjs-i18n';
 import { I18nTranslations } from 'src/generated/i18n.generated';
 import { HandlerFilter } from 'src/utils/handler-filter';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class CommandsHandler implements IUpdateHandler {
@@ -12,6 +13,7 @@ export class CommandsHandler implements IUpdateHandler {
   constructor(
     private readonly i18n: I18nService<I18nTranslations>,
     private readonly filter: HandlerFilter,
+    private readonly config: ConfigService,
   ) {}
 
   match({ response }: any) {
@@ -22,7 +24,7 @@ export class CommandsHandler implements IUpdateHandler {
     this.logger.log('.commands command received');
 
     const commandsDescriptions = this.i18n.t('commands.commands-info', {
-      args: { prefix: '.' },
+      args: { prefix: this.config.get('COMMAND_PREFIX') },
     });
 
     const header = this.i18n.t('commands.header');
@@ -33,7 +35,7 @@ export class CommandsHandler implements IUpdateHandler {
       textParts.push(
         this.i18n.t('commands.command-item', {
           args: {
-            prefix: '.',
+            prefix: this.config.get('COMMAND_PREFIX'),
             name: command,
             description: info.description,
           },
@@ -44,7 +46,7 @@ export class CommandsHandler implements IUpdateHandler {
     textParts.push(
       this.i18n.t('commands.footer', {
         args: {
-          prefix: '.',
+          prefix: this.config.get('COMMAND_PREFIX'),
         },
       }),
     );
