@@ -10,4 +10,5 @@ export const envValidationSchema = Joi.object({
   LOG_UPDATES: Joi.boolean().default(false),
   WEATHER_API_KEY: Joi.string().optional(),
   RSYNC_DESTINATION: Joi.string().optional(),
+  COMMAND_PREFIX: Joi.string().default('.'),
 });

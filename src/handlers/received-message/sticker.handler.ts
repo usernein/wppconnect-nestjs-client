@@ -3,20 +3,23 @@ import { MessagesService } from 'src/utils/wpp-connect-sdk';
 import { IUpdateHandler } from '../contracts/handler.interface';
 import { I18nService } from 'nestjs-i18n';
 import { I18nTranslations } from 'src/generated/i18n.generated';
+import { HandlerFilter } from 'src/utils/handler-filter';
 
 @Injectable()
 export class StickerHandler implements IUpdateHandler {
   private readonly logger = new Logger(StickerHandler.name);
 
-  constructor(private readonly i18n: I18nService<I18nTranslations>) {}
-
-  checkIsImageCommand(response: any) {
-    return response.type === 'image' && response.caption == '.sticker';
-  }
+  constructor(
+    private readonly i18n: I18nService<I18nTranslations>,
+    private readonly filter: HandlerFilter,
+  ) {}
 
   match({ response }: any) {
-    const { body } = response;
-    return this.checkIsImageCommand(response) || body === '.sticker';
+    return this.filter.check(response).isCommand('sticker');
+  }
+
+  private checkIsImageCommand(response: any) {
+    return response.type == 'image';
   }
 
   async handle({ response }: any) {

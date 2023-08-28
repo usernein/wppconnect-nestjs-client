@@ -22,9 +22,10 @@ import { StickerHandler } from './handlers/received-message/sticker.handler';
 import { HelpHandler } from './handlers/received-message/help.handler';
 import { CommandsHandler } from './handlers/received-message/commands.handler';
 import { InfoHandler } from './handlers/received-message/info.handler';
-import { envValidationSchema } from './utils/validation/env-schema-validation';
+import { envValidationSchema } from './validation/env-schema-validation';
 import { I18nModule } from 'nestjs-i18n';
 import * as path from 'path';
+import { HandlerFilter } from './utils/handler-filter';
 
 const updateHandlers = [
   DiceHandler,
@@ -72,6 +73,7 @@ const updateHandlers = [
   providers: [
     SocketIoClientProvider,
     SocketIoClientStrategy,
+    HandlerFilter,
     ...updateHandlers,
     {
       provide: 'ReceivedMessageHandlers',

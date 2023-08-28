@@ -3,15 +3,19 @@ import { MessagesService } from 'src/utils/wpp-connect-sdk';
 import { IUpdateHandler } from '../contracts/handler.interface';
 import { I18nService } from 'nestjs-i18n';
 import { I18nTranslations } from 'src/generated/i18n.generated';
+import { HandlerFilter } from 'src/utils/handler-filter';
 
 @Injectable()
 export class HelpHandler implements IUpdateHandler {
   private readonly logger = new Logger(HelpHandler.name);
 
-  constructor(private readonly i18n: I18nService<I18nTranslations>) {}
+  constructor(
+    private readonly i18n: I18nService<I18nTranslations>,
+    private readonly filter: HandlerFilter,
+  ) {}
 
-  match({ response: { body } }: any) {
-    return body === '.help';
+  match({ response }: any) {
+    return this.filter.check(response).isCommand('help');
   }
 
   async handle({ response }: any) {

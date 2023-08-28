@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { Injectable, Logger } from '@nestjs/common';
 import { I18nService } from 'nestjs-i18n';
 import { I18nTranslations } from 'src/generated/i18n.generated';
+import { HandlerFilter } from 'src/utils/handler-filter';
 
 const getCoordsUrl = 'https://api.weather.com/v3/location/search';
 const weatherUrl =
@@ -32,10 +33,11 @@ export class WeatherHandler implements IUpdateHandler {
   constructor(
     private readonly config: ConfigService,
     private readonly i18n: I18nService<I18nTranslations>,
+    private readonly filter: HandlerFilter,
   ) {}
 
-  match({ response: { body } }: any) {
-    return body?.startsWith('.clima');
+  match({ response }: any) {
+    return this.filter.check(response).isCommand('clima');
   }
 
   async handle({ response }: any) {

@@ -3,15 +3,19 @@ import { IUpdateHandler } from '../contracts/handler.interface';
 import { Injectable, Logger } from '@nestjs/common';
 import { I18nService } from 'nestjs-i18n';
 import { I18nTranslations } from 'src/generated/i18n.generated';
+import { HandlerFilter } from 'src/utils/handler-filter';
 
 @Injectable()
 export class PingHandler implements IUpdateHandler {
   private readonly logger = new Logger(PingHandler.name);
 
-  constructor(private readonly i18n: I18nService<I18nTranslations>) {}
+  constructor(
+    private readonly i18n: I18nService<I18nTranslations>,
+    private readonly filter: HandlerFilter,
+  ) {}
 
-  match({ response: { body } }: any) {
-    return body === '.ping';
+  match({ response }: any) {
+    return this.filter.check(response).isCommand('ping');
   }
 
   handle({ response }: any) {
