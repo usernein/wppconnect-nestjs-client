@@ -1,0 +1,7 @@
+{
+  "error": {
+    "generic": "❌ *Ops!* Uso incorreto.\nEnvie a localização desejada após o comando.\n\nExemplo: _.clima Curitiba_",
+    "invalid-location": "❌ Localização inválida: {location}"
+  },
+  "result": "*{address}*\n- _{summary}_\n\n⛅️ *Temperatura*: {temperature} °C\n😮‍💨 *Sensação térmica*: {temperatureFeelsLike} °C\n💧 *Umidade*: {relativeHumidity}%\n🌬 *Ventania*: {windSpeed} km/h"
+}

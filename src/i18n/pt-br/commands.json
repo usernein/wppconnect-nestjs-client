@@ -1,0 +1,43 @@
+{
+  "header": "🗒️ *Lista de comandos*\n",
+  "header-detailed": "🗒️ *Lista de comandos*\n_(Envie *.commands info* para mais detalhes)_\n",
+  "command-item": "• *{name}* - _{description}_",
+  "footer": "\n*Para mais detalhes sobre um comando específico, use {prefix}help <comando>*",
+  "commands-info": {
+    "commands": {
+      "title": "Commands",
+      "description": "Lista todos os comandos",
+      "usage": "{prefix}commands"
+    },
+    "dice": {
+      "title": "Dice",
+      "description": "lança um dado de 6 faces e retorna o resultado.",
+      "usage": "{prefix}dice"
+    },
+    "sticker": {
+      "title": "Sticker",
+      "description": "Cria um sticker com a imagem enviada ou respondida.",
+      "usage": "{prefix}sticker (respondendo a uma imagem ou enviando uma imagem com o comando na legenda)"
+    },
+    "ping": {
+      "title": "Ping",
+      "description": "Retorna o tempo calculado entre o envio e o processamento do comando.",
+      "usage": "{prefix}ping"
+    },
+    "info": {
+      "title": "Info",
+      "description": "Retorna informações sobre o bot.",
+      "usage": "{prefix}info"
+    },
+    "clima": {
+      "title": "Clima",
+      "description": "Retorna informações sobre o clima de uma cidade.",
+      "usage": "{prefix}clima <cidade>"
+    },
+    "help": {
+      "title": "Help",
+      "description": "Retorna um breve guia sobre o bot ou um comando específico.",
+      "usage": "{prefix}help [comando]"
+    }
+  }
+}

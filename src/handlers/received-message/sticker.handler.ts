@@ -1,9 +1,14 @@
-import { Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { MessagesService } from 'src/utils/wpp-connect-sdk';
 import { IUpdateHandler } from '../contracts/handler.interface';
+import { I18nService } from 'nestjs-i18n';
+import { I18nTranslations } from 'src/generated/i18n.generated';
 
+@Injectable()
 export class StickerHandler implements IUpdateHandler {
   private readonly logger = new Logger(StickerHandler.name);
+
+  constructor(private readonly i18n: I18nService<I18nTranslations>) {}
 
   checkIsImageCommand(response: any) {
     return response.type === 'image' && response.caption == '.sticker';
@@ -21,7 +26,7 @@ export class StickerHandler implements IUpdateHandler {
     const isImageCommand = this.checkIsImageCommand(response);
 
     if (!isImageCommand && !isQuotingImage) {
-      const text = `*🤖 Ops!*\n_Para transformar uma imagem em sticker, envie o comando respondendo a uma imagem ou envie uma imagem com o comando na legenda._`;
+      const text = this.i18n.t('sticker.error.wrong_usage.generic');
       await MessagesService.postApiSendMessage(response.session, {
         phone: response.chatId,
         isGroup: response.isGroupMsg,

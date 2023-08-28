@@ -23,6 +23,8 @@ import { HelpHandler } from './handlers/received-message/help.handler';
 import { CommandsHandler } from './handlers/received-message/commands.handler';
 import { InfoHandler } from './handlers/received-message/info.handler';
 import { envValidationSchema } from './utils/validation/env-schema-validation';
+import { I18nModule } from 'nestjs-i18n';
+import * as path from 'path';
 
 const updateHandlers = [
   DiceHandler,
@@ -40,6 +42,17 @@ const updateHandlers = [
       envFilePath: '.env',
       isGlobal: true,
       validationSchema: envValidationSchema,
+    }),
+    I18nModule.forRoot({
+      fallbackLanguage: 'pt-br',
+      loaderOptions: {
+        path: path.join(__dirname, '/i18n/'),
+        watch: true,
+      },
+      typesOutputPath: path.join(
+        __dirname,
+        '../src/generated/i18n.generated.ts',
+      ),
     }),
   ],
   controllers: [

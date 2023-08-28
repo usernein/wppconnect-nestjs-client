@@ -1,24 +1,17 @@
-import { Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { MessagesService } from 'src/utils/wpp-connect-sdk';
 import { IUpdateHandler } from '../contracts/handler.interface';
-// 🗒️ *Lista de comandos*\n- *.commands*: retorna esta mensagem\n- *.help*: retorna uma mensagem pouco útil\n\n- *.ping*: para pequenos testes. Retorna o tempo que levou para receber a processar a mensagem.\n- *.dice*: lança um dado e retorna o resultado.\n- *.sticker*: envie o comando respondendo a uma imagem para transformá-la em sticker. Também funciona utilizando o comando como legenda de uma imagem.\n- *.clima*: passe o nome de uma cidade (ou de qualquer localização) como argumento e receba informações do clima em tempo real.
+import { I18nService } from 'nestjs-i18n';
+import { I18nTranslations } from 'src/generated/i18n.generated';
+
+@Injectable()
 export class CommandsHandler implements IUpdateHandler {
   private readonly logger = new Logger(CommandsHandler.name);
 
-  private commandsDescriptions = {
-    commands: 'retorna esta mensagem',
-    help: 'retorna uma mensagem pouco útil',
-    info: 'retorna info sobre este chatbot',
-    ping: 'para pequenos testes. Retorna o tempo que levou para receber a processar a mensagem.',
-    dice: 'lança um dado de 6 faces e retorna o resultado.',
-    sticker:
-      'envie o comando respondendo a uma imagem para transformá-la em sticker. Também funciona utilizando o comando como legenda de uma imagem.',
-    clima:
-      'passe o nome de uma cidade (ou de qualquer localização) como argumento e receba informações do clima em tempo real.',
-  };
+  constructor(private readonly i18n: I18nService<I18nTranslations>) {}
 
   match({ response: { body } }: any) {
-    return body?.startsWith('.commands');
+    return body?.startsWith('!commands');
   }
 
   async handle({ response }: any) {
@@ -27,19 +20,34 @@ export class CommandsHandler implements IUpdateHandler {
     const args = parts.slice(1);
     const isDetailed = args.length && args[0] == 'info';
 
-    const header =
-      `🗒️ *Lista de comandos*` +
-      (isDetailed ? '' : '\n_(Envie *.commands info* para + detalhes)_\n');
+    const commandsDescriptions = this.i18n.t('commands.commands-info', {
+      args: { prefix: '.' },
+    });
+
+    const header = isDetailed
+      ? this.i18n.t('commands.header-detailed')
+      : this.i18n.t('commands.header');
+
     const textParts = [header];
 
-    Object.entries(this.commandsDescriptions).forEach(
-      ([command, description]) => {
-        if (isDetailed) {
-          textParts.push(`- *.${command}*: ${description}\n`);
-          return;
-        }
-        textParts.push(`- *.${command}*`);
-      },
+    Object.entries(commandsDescriptions).forEach(([command, info]) => {
+      textParts.push(
+        this.i18n.t('commands.command-item', {
+          args: {
+            prefix: '.',
+            name: command,
+            description: info.description,
+          },
+        }),
+      );
+    });
+
+    textParts.push(
+      this.i18n.t('commands.footer', {
+        args: {
+          prefix: '.',
+        },
+      }),
     );
 
     const text = textParts.join('\n');

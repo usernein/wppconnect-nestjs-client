@@ -3,6 +3,8 @@ import { IUpdateHandler } from '../contracts/handler.interface';
 import { MessagesService } from 'src/utils/wpp-connect-sdk';
 import { ConfigService } from '@nestjs/config';
 import { Injectable, Logger } from '@nestjs/common';
+import { I18nService } from 'nestjs-i18n';
+import { I18nTranslations } from 'src/generated/i18n.generated';
 
 const getCoordsUrl = 'https://api.weather.com/v3/location/search';
 const weatherUrl =
@@ -27,7 +29,10 @@ function sendMessage(response: any, message: string) {
 export class WeatherHandler implements IUpdateHandler {
   private readonly logger = new Logger(WeatherHandler.name);
 
-  constructor(private readonly config: ConfigService) {}
+  constructor(
+    private readonly config: ConfigService,
+    private readonly i18n: I18nService<I18nTranslations>,
+  ) {}
 
   match({ response: { body } }: any) {
     return body?.startsWith('.clima');
@@ -38,26 +43,30 @@ export class WeatherHandler implements IUpdateHandler {
 
     const body = response.body;
     if (body.indexOf(' ') === -1) {
-      return sendMessage(
-        response,
-        '❌ Comando inválido. Envie a localização desejada após o comando.\n\nExemplo: .clima Curitiba',
-      );
+      return sendMessage(response, this.i18n.t('weather.error.generic'));
     }
 
     const city = body.substring(body.indexOf(' ') + 1);
 
-    const coords = await axios.get(getCoordsUrl, {
-      params: {
-        apiKey: this.config.get('WEATHER_API_KEY'),
-        format: 'json',
-        language: 'pt-BR',
-        query: city,
-      },
-      headers,
-    });
+    let coords;
+    try {
+      coords = await axios.get(getCoordsUrl, {
+        params: {
+          apiKey: this.config.get('WEATHER_API_KEY'),
+          format: 'json',
+          language: 'pt-BR',
+          query: city,
+        },
+        headers,
+      });
+    } catch (err) {
+      this.logger.error(err);
+      this.handleInvalidLocation(response, city);
+      return;
+    }
 
     if (!coords.data.location) {
-      return sendMessage(response, '❌ Localização inválida: ' + city);
+      return this.handleInvalidLocation(response, city);
     }
 
     const location = coords.data.location;
@@ -83,14 +92,28 @@ export class WeatherHandler implements IUpdateHandler {
     const relativeHumidity = obs_current.relativeHumidity;
     const windSpeed = obs_current.windSpeed;
 
-    const text = `*${address}*
-- _${summary}_
-
-⛅️ *Temperatura*: ${temperature} °C
-😮‍💨 *Sensação térmica*: ${temperatureFeelsLike} °C
-💧 *Umidade*: ${relativeHumidity}%
-🌬 *Ventania*: ${windSpeed} km/h`;
+    const text = this.i18n.t('weather.result', {
+      args: {
+        address,
+        summary,
+        temperature,
+        temperatureFeelsLike,
+        relativeHumidity,
+        windSpeed,
+      },
+    });
 
     sendMessage(response, text);
+  }
+
+  handleInvalidLocation(response: any, location: string) {
+    sendMessage(
+      response,
+      this.i18n.t('weather.error.invalid-location', {
+        args: {
+          location,
+        },
+      }),
+    );
   }
 }

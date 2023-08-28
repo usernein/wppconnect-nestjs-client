@@ -1,0 +1,5 @@
+{
+  "header": "ℹ️ *Info sobre o bot:*",
+  "subheader": "_wppconnect-nestjs-client v{version}_\n",
+  "body": "🕵️‍♂️ _*Desenvolvedor*: github.com/usernein_\n📂 _*Código-fonte:* ainda indefinido_\n🛠️ _*Tecnologias*: NestJS, TypeScript, Wppconnect, WebSockets, Docker_"
+}

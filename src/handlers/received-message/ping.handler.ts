@@ -1,9 +1,14 @@
 import { MessagesService } from 'src/utils/wpp-connect-sdk';
 import { IUpdateHandler } from '../contracts/handler.interface';
-import { Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { I18nService } from 'nestjs-i18n';
+import { I18nTranslations } from 'src/generated/i18n.generated';
 
+@Injectable()
 export class PingHandler implements IUpdateHandler {
   private readonly logger = new Logger(PingHandler.name);
+
+  constructor(private readonly i18n: I18nService<I18nTranslations>) {}
 
   match({ response: { body } }: any) {
     return body === '.ping';
@@ -20,10 +25,16 @@ export class PingHandler implements IUpdateHandler {
 
     this.logger.debug({ messageTimestamp, timestampNow, difference });
 
+    const text = this.i18n.t('ping.result', {
+      args: {
+        ping: difference / 1000,
+      },
+    });
+
     MessagesService.postApiSendMessage(response.session, {
       phone: response.chatId,
       isGroup: response.isGroupMsg,
-      message: `🏓 *Pong!* _(${difference / 1000}ms)_`,
+      message: text,
     });
   }
 }
