@@ -20,17 +20,12 @@ export class CommandsHandler implements IUpdateHandler {
 
   async handle({ response }: any) {
     this.logger.log('.commands command received');
-    const parts = response.body.split(' ');
-    const args = parts.slice(1);
-    const isDetailed = args.length && args[0] == 'info';
 
     const commandsDescriptions = this.i18n.t('commands.commands-info', {
       args: { prefix: '.' },
     });
 
-    const header = isDetailed
-      ? this.i18n.t('commands.header-detailed')
-      : this.i18n.t('commands.header');
+    const header = this.i18n.t('commands.header');
 
     const textParts = [header];
 

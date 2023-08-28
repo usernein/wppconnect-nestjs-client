@@ -4,7 +4,6 @@ import { Path } from "nestjs-i18n";
 export type I18nTranslations = {
     "commands": {
         "header": string;
-        "header-detailed": string;
         "command-item": string;
         "footer": string;
         "commands-info": {

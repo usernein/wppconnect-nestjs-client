@@ -1,6 +1,5 @@
 {
   "header": "🗒️ *Lista de comandos*\n",
-  "header-detailed": "🗒️ *Lista de comandos*\n_(Envie *.commands info* para mais detalhes)_\n",
   "command-item": "• *{name}* - _{description}_",
   "footer": "\n*Para mais detalhes sobre um comando específico, use {prefix}help <comando>*",
   "commands-info": {
