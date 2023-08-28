@@ -9,9 +9,15 @@ export class SocketIoClientProvider {
   private socket: Socket;
   private readonly logger = new Logger(SocketIoClientProvider.name);
 
-  private connect() {
+  private logStartInfo() {
     const url = this.config.get('WPPCONNECT_BASE');
-    this.logger.verbose(`Connecting to socket.io server: ${url}`);
+    this.logger.verbose(`Starting socket.io client with url: ${url}`);
+  }
+
+  private connect() {
+    this.logStartInfo();
+
+    const url = this.config.get('WPPCONNECT_BASE');
 
     this.socket = io(url);
     return this.socket;
