@@ -2,6 +2,18 @@
 
 import { Path } from "nestjs-i18n";
 export type I18nTranslations = {
+    "anime": {
+        "error": {
+            "wrong_usage": {
+                "generic": string;
+            };
+            "api_error": {
+                "generic": string;
+            };
+        };
+        "result_with_episode": string;
+        "result_without_episode": string;
+    };
     "commands": {
         "header": string;
         "command-item": string;

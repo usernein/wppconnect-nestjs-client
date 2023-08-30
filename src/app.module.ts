@@ -26,6 +26,7 @@ import { envValidationSchema } from './validation/env-schema-validation';
 import { I18nModule } from 'nestjs-i18n';
 import * as path from 'path';
 import { HandlerFilter } from './utils/handler-filter';
+import { AnimeHandler } from './handlers/received-message/anime.handler';
 
 const updateHandlers = [
   DiceHandler,
@@ -35,6 +36,7 @@ const updateHandlers = [
   HelpHandler,
   CommandsHandler,
   InfoHandler,
+  AnimeHandler,
 ];
 
 @Module({

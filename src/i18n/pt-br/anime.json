@@ -1,0 +1,12 @@
+{
+  "error": {
+    "wrong_usage": {
+      "generic": "*🤖 Ops!*\n_Para identificar um anime por imagem, envie o comando respondendo a uma imagem ou envie uma imagem com o comando na legenda._"
+    },
+    "api_error": {
+      "generic": "*🤖 Ops!*\n_Ocorreu um erro ao tentar identificar o anime, tente novamente mais tarde._"
+    }
+  },
+  "result_with_episode": "🎥 *Anime:* _{title}_\n🏷️ *Episódio:* _{episode} ({startPoint} - {endPoint})_\n🔎 *Similaridade:* _{similarity}%_\n🔗 *Link:* _{anime_link}_",
+  "result_without_episode": "🎥 *Anime:* _{title} ({startPoint} - {endPoint})_\n🔎 *Similaridade:* _{similarity}%_\n🔗 *Link:* _{anime_link}_"
+}
