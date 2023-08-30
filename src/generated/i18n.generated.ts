@@ -54,6 +54,11 @@ export type I18nTranslations = {
                 "description": string;
                 "usage": string;
             };
+            "anime": {
+                "title": string;
+                "description": string;
+                "usage": string;
+            };
         };
     };
     "dice": {

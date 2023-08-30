@@ -37,6 +37,11 @@
       "title": "Help",
       "description": "Retorna um breve guia sobre o bot ou um comando específico.",
       "usage": "{prefix}help [comando]"
+    },
+    "anime": {
+      "title": "Anime",
+      "description": "Tenta descobrir qual é o anime de uma imagem.",
+      "usage": "{prefix}anime (respondendo a uma imagem ou enviando uma imagem com o comando na legenda)"
     }
   }
 }
