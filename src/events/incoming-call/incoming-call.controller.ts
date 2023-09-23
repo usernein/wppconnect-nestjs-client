@@ -8,8 +8,15 @@ export class IncomingCallController {
 
   constructor(private readonly config: ConfigService) {}
 
+  shouldLog() {
+    return (
+      this.config.get('LOG_UPDATES') &&
+      this.config.get('EVENTS_TO_LOG').split(',').includes('incoming-call')
+    );
+  }
+
   @MessagePattern('incomingcall')
   handle(data: any) {
-    if (this.config.get('LOG_UPDATES')) this.logger.verbose({ data });
+    if (this.shouldLog()) this.logger.verbose({ data });
   }
 }

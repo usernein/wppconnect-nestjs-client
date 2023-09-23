@@ -8,8 +8,15 @@ export class OnAckController {
 
   private readonly logger = new Logger(OnAckController.name);
 
+  shouldLog() {
+    return (
+      this.config.get('LOG_UPDATES') &&
+      this.config.get('EVENTS_TO_LOG').split(',').includes('on-ack')
+    );
+  }
+
   @MessagePattern('onack')
   handle(data: any) {
-    if (this.config.get('LOG_UPDATES')) this.logger.verbose({ data });
+    if (this.shouldLog()) this.logger.verbose({ data });
   }
 }

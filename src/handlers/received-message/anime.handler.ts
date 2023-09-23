@@ -8,6 +8,24 @@ import * as fs from 'fs';
 import * as fetch from 'node-fetch';
 import * as FfmpegCommand from 'fluent-ffmpeg';
 
+class FfmpegLogger implements FfmpegCommand.FfmpegCommandLogger {
+  private readonly logger: Logger;
+  constructor(logger: Logger) {
+    this.logger = logger;
+  }
+  debug(message: string) {
+    this.logger.debug(message);
+  }
+  error(message: string) {
+    this.logger.error(message);
+  }
+  warn(message: string) {
+    this.logger.warn(message);
+  }
+  info(message: string) {
+    this.logger.log(message);
+  }
+}
 @Injectable()
 export class AnimeHandler implements IUpdateHandler {
   private readonly logger = new Logger(AnimeHandler.name);
@@ -117,12 +135,23 @@ export class AnimeHandler implements IUpdateHandler {
       });
 
       try {
-        new FfmpegCommand(inputVideoFileName)
+        const ffmpegLogger = new FfmpegLogger(this.logger);
+        const command = FfmpegCommand(inputVideoFileName, {
+          logger: ffmpegLogger,
+        })
           .output(outputVideoFileName)
-          .on('end', () => {
+          .on('error', function (err, stdout, stderr) {
+            this.logger.error('Cannot process video: ' + err.message);
+            this.logger.verbose({ stdout, stderr });
+          })
+          .on('end', (stdout, stderr) => {
+            this.logger.verbose('Finished processing video');
+            this.logger.verbose({ stdout, stderr });
             const convertedBase64 = fs.readFileSync(outputVideoFileName, {
               encoding: 'base64',
             });
+
+            this.cleanUpFiles(inputVideoFileName, outputVideoFileName);
 
             const formattedBase64 = `data:video/mp4;base64,${convertedBase64}`;
 
@@ -133,11 +162,11 @@ export class AnimeHandler implements IUpdateHandler {
               base64: formattedBase64,
               caption: text,
             });
-          })
-          .run();
-      } finally {
-        fs.unlinkSync(inputVideoFileName);
-        fs.unlinkSync(outputVideoFileName);
+          });
+        command.run();
+      } catch (error) {
+        this.cleanUpFiles(inputVideoFileName, outputVideoFileName);
+        throw error;
       }
 
       return;
@@ -148,5 +177,10 @@ export class AnimeHandler implements IUpdateHandler {
       isGroup: response.isGroupMsg,
       message: text,
     });
+  }
+
+  private cleanUpFiles(inputFilename: string, outputFilename: string) {
+    if (fs.existsSync(inputFilename)) fs.unlinkSync(inputFilename);
+    if (fs.existsSync(outputFilename)) fs.unlinkSync(outputFilename);
   }
 }
