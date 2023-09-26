@@ -42,6 +42,11 @@
       "title": "Anime",
       "description": "Tenta descobrir qual é o anime de uma imagem.",
       "usage": "{prefix}anime (respondendo a uma imagem ou enviando uma imagem com o comando na legenda)"
+    },
+    "tiktok": {
+      "title": "TikTok",
+      "description": "Baixa um vídeo do TikTok sem marca d'água.",
+      "usage": "{prefix}tiktok <link> ou {prefix}tt <link>"
     }
   }
 }

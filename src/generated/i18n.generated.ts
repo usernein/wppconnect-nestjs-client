@@ -59,6 +59,11 @@ export type I18nTranslations = {
                 "description": string;
                 "usage": string;
             };
+            "tiktok": {
+                "title": string;
+                "description": string;
+                "usage": string;
+            };
         };
     };
     "dice": {
@@ -89,6 +94,13 @@ export type I18nTranslations = {
                 "generic": string;
             };
         };
+    };
+    "tiktok": {
+        "acknowledgement-text": string;
+        "missing-argument": string;
+        "error-downloading": string;
+        "error-converting": string;
+        "error-uploading": string;
     };
     "weather": {
         "error": {

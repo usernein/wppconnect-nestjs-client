@@ -1,0 +1,7 @@
+{
+  "acknowledgement-text": "👍 *Ok!* Vou baixar o vídeo e enviar para você. Isso deve durar cerca de 15 segundos.",
+  "missing-argument": "❌ *Ops!* Você esqueceu de enviar o link do vídeo após o comando.",
+  "error-downloading": "❌ *Ops!*, ocorreu um erro ao baixar o vídeo.",
+  "error-converting": "❌ *Ops!*, ocorreu um erro ao converter o vídeo para o formato aceito no WhatsApp.",
+  "error-uploading": "❌ *Ops!*, ocorreu um erro ao enviar o vídeo para o WhatsApp."
+}

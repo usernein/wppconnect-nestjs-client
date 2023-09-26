@@ -27,6 +27,7 @@ import { I18nModule } from 'nestjs-i18n';
 import * as path from 'path';
 import { HandlerFilter } from './utils/handler-filter';
 import { AnimeHandler } from './handlers/received-message/anime.handler';
+import { TikTokHandler } from './handlers/received-message/tiktok.handler';
 
 const updateHandlers = [
   DiceHandler,
@@ -37,6 +38,7 @@ const updateHandlers = [
   CommandsHandler,
   InfoHandler,
   AnimeHandler,
+  TikTokHandler,
 ];
 
 @Module({

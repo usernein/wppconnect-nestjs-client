@@ -15,4 +15,5 @@ export const envValidationSchema = Joi.object({
   WEATHER_API_KEY: Joi.string().optional(),
   RSYNC_DESTINATION: Joi.string().optional(),
   COMMAND_PREFIX: Joi.string().default('.'),
+  DOUYIN_TIKTOK_DOWNLOAD_API_URL: Joi.string().optional(),
 });
