@@ -8,25 +8,8 @@ import * as fs from 'node:fs';
 import { ConfigService } from '@nestjs/config';
 import * as fetch from 'node-fetch';
 import * as FfmpegCommand from 'fluent-ffmpeg';
+import { FfmpegLogger } from '../../utils/ffmpef-logger';
 
-class FfmpegLogger implements FfmpegCommand.FfmpegCommandLogger {
-  private readonly logger: Logger;
-  constructor(logger: Logger) {
-    this.logger = logger;
-  }
-  debug(message: string) {
-    this.logger.debug(message);
-  }
-  error(message: string) {
-    this.logger.error(message);
-  }
-  warn(message: string) {
-    this.logger.warn(message);
-  }
-  info(message: string) {
-    this.logger.log(message);
-  }
-}
 
 @Injectable()
 export class TikTokHandler implements IUpdateHandler {
@@ -36,7 +19,8 @@ export class TikTokHandler implements IUpdateHandler {
     private readonly i18n: I18nService<I18nTranslations>,
     private readonly filter: HandlerFilter,
     private readonly config: ConfigService,
-  ) {}
+  ) {
+  }
 
   match({ response }: any) {
     return (
@@ -107,7 +91,10 @@ export class TikTokHandler implements IUpdateHandler {
       })
         .videoCodec('copy')
         .output(outputVideoFileName)
-        .on('error', function (err, stderr, stdout) {
+        .on('start', function(commandLine) {
+          console.log('Spawned Ffmpeg with command: ' + commandLine);
+        })
+        .on('error', function(err, stderr, stdout) {
           this.logger.error('Cannot process video: ' + err.message);
           this.logger.verbose({ stderr, stdout });
         })
@@ -155,6 +142,7 @@ export class TikTokHandler implements IUpdateHandler {
       this.logger.error('Error converting video', error);
     }
   }
+
   private cleanUpFiles(inputFilename: string, outputFilename: string) {
     if (fs.existsSync(inputFilename)) fs.unlinkSync(inputFilename);
     if (fs.existsSync(outputFilename)) fs.unlinkSync(outputFilename);

@@ -15,8 +15,8 @@
     },
     "sticker": {
       "title": "Sticker",
-      "description": "Cria um sticker com a imagem enviada ou respondida.",
-      "usage": "{prefix}sticker (respondendo a uma imagem ou enviando uma imagem com o comando na legenda)"
+      "description": "Cria um sticker com a mídia (imagem ou vídeo) enviada ou respondida.",
+      "usage": "{prefix}sticker (respondendo a uma mídia ou enviando uma mídia com o comando na legenda)"
     },
     "ping": {
       "title": "Ping",

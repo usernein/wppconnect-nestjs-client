@@ -1,7 +1,7 @@
 {
   "error": {
     "wrong_usage": {
-      "generic": "*🤖 Ops!*\n_Para transformar uma imagem em sticker, envie o comando respondendo a uma imagem ou envie uma imagem com o comando na legenda._"
+      "generic": "*🤖 Ops!*\n_Para transformar uma imagem ou vídeo em sticker, envie o comando respondendo a uma mídia ou envie uma mídia com o comando na legenda._"
     }
   }
 }
